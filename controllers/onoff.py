@@ -12,7 +12,7 @@ class OnOffThermostat:
             self.state = 1  # Turn ON
         elif measured_temp > (self.setpoint + self.deadband / 2):
             self.state = 0  # Turn OFF
-        elif measured_temp > self.safety_high:
+        elif measured_temp >= self.safety_high:
             self.state = 0  # Turn OFF for safety
         return self.state
 
