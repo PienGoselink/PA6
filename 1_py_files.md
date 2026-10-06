@@ -10,8 +10,7 @@ You can also execute python script from the CLI (either from the terminal in VS 
 
 ```
 conda activate mude-base
-```
-
+```  
 This makes sure you run python from the correct conda environment. After that you can execute files with:
 
 ```

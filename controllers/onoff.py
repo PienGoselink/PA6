@@ -8,6 +8,14 @@ class OnOffThermostat:
     state: int = 0  # 0=OFF, 1=ON
 
     def update(self, measured_temp: float) -> int:
+        if measured_temp < (self.setpoint - self.deadband / 2):
+            self.state = 1  # Turn ON
+        elif measured_temp > (self.setpoint + self.deadband / 2):
+            self.state = 0  # Turn OFF
+        elif measured_temp > self.safety_high:
+            self.state = 0  # Turn OFF for safety
+        return self.state
+
         ''' Update the thermostat state based on the measured temperature.
             If the measured temperature is below the lower threshold (setpoint - deadband/2),
             the thermostat turns ON (state=1).

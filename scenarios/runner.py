@@ -1,6 +1,6 @@
 import os
 import time
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 from utils.config import load_config
 from utils.rng import RNG
@@ -12,9 +12,11 @@ from simulations.room_model import step_room
 from simulations.environment import Environment
 from plotting.plots import plot_timeseries, plot_error, plot_duty, plot_predictive, plot_heater
 
-def run_scenario(scenario_path: str):
+def simulate_scenario(
+    scenario_path: str, seed: Optional[int] = None
+) -> Tuple[Dict[str, List[float]], bool]:
     scenario = load_config(scenario_path)
-    rng = RNG(scenario.sim.seed)
+    rng = RNG(scenario.sim.seed if seed is None else seed)
 
     env = Environment(
         base=scenario.env.base,
@@ -95,6 +97,12 @@ def run_scenario(scenario_path: str):
 
         T = step_room(T, heater, T_out, scenario.model.R, scenario.model.C, scenario.model.P,
                       dt, scenario.model.process_sigma, rng)
+
+    return log, use_predictive
+
+
+def run_scenario(scenario_path: str):
+    log, use_predictive = simulate_scenario(scenario_path)
 
     # Write CSV
     ts = time.strftime("%Y%m%d-%H%M%S")

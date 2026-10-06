@@ -14,7 +14,7 @@ sensor:
 controller:
   type: predictive_onoff
   setpoint: 21.0
-  deadband: 1.0
+  deadband: 0.5
   tau: 10.0
   safety_high: 26.0
 

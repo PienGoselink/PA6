@@ -34,3 +34,18 @@ The autograder checks the following aspects of your work for each push to GitHub
 This assignment is due on 10:45, Wednesday, October 7, 2026.
 
 > By Tom van Woudenberg and Stanislaw Ostyk-Narbutt, Delft University of Technology. CC BY 4.0, more info [on the Credits page of Workbook](https://mude.citg.tudelft.nl/workbook-2026/credits.html).
+
+## Monte Carlo uncertainty analysis
+
+Run the same scenario with multiple consecutive random seeds to estimate variation
+in heater use and temperature regulation:
+
+```bash
+python monte_carlo.py --scenario scenarios/cold_morning.yaml --runs 100
+```
+
+The first seed comes from the scenario's `sim.seed` setting. To choose a different
+starting seed, pass `--seed`. The command writes per-run metrics and an aggregate
+summary CSV under `outputs/monte_carlo/`. The summary reports the mean, sample
+standard deviation, and 5th and 95th percentiles of heater duty cycle, mean
+absolute temperature error, RMSE, and minimum and maximum room temperature.
